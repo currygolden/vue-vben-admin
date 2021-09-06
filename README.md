@@ -164,6 +164,12 @@ If you think this project is helpful to you, you can help the author buy a cup o
 - [github discussions](https://github.com/anncwb/vue-vben-admin/discussions)
 - [Discord](https://discord.gg/8GuAdwDhj6)
 
+## update
+- folk 来自于upstream 
+  git remote -v 获取upstream
+  git fetch upstream 更新 upstream
+  git merge upstream/master 本地主干更新
+
 ## License
 
 [MIT © Vben-2020](./LICENSE)
