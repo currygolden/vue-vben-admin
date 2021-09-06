@@ -42,7 +42,7 @@
     },
     { flush: 'post' },
   );
-
+  // 使用到的ref变化执行回调
   watchEffect(() => {
     editor?.setOption('mode', props.mode);
   });

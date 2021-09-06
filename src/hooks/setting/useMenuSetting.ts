@@ -9,7 +9,11 @@ import { MenuModeEnum, MenuTypeEnum, TriggerEnum } from '/@/enums/menuEnum';
 import { useFullContent } from '/@/hooks/web/useFullContent';
 
 const mixSideHasChildren = ref(false);
-
+/**
+ * hooks 是组合式api的一部分，类似与mixin
+ * 作用复用代码，优化setup的逻辑结构
+ * 函数
+ */
 export function useMenuSetting() {
   const { getFullContent: fullContent } = useFullContent();
   const appStore = useAppStore();

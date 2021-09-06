@@ -1,6 +1,8 @@
 /**
  * copy to https://github.com/developit/mitt
  * Expand clear method
+ *
+ * 类似的发布订阅模式
  */
 
 export type EventType = string | symbol;

@@ -30,10 +30,12 @@ export function setupRouterGuard(router: Router) {
  * Hooks for handling page state
  */
 function createPageGuard(router: Router) {
+  // 在实际调用的时候指定泛型类型，这里可以借助类型推论
   const loadedPageMap = new Map<string, boolean>();
 
   router.beforeEach(async (to) => {
     // The page has already been loaded, it will be faster to open it again, you don’t need to do loading and other processing
+    // 用map 来保存页面的访问状态
     to.meta.loaded = !!loadedPageMap.get(to.path);
     // Notify routing changes
     setRouteChange(to);

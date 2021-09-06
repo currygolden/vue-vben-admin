@@ -16,10 +16,11 @@ import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { isArray } from '/@/utils/is';
 
+// 定义用户数据类型
 interface UserState {
-  userInfo: Nullable<UserInfo>;
+  userInfo: Nullable<UserInfo>; // UserInfo&null&undefined
   token?: string;
-  roleList: RoleEnum[];
+  roleList: RoleEnum[]; // 枚举类型数组
   sessionTimeout?: boolean;
   lastUpdateTime: number;
 }

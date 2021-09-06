@@ -40,7 +40,7 @@
   import type { FormActionType, FormProps, FormSchema } from './types/form';
   import type { AdvanceState } from './types/hooks';
   import type { Ref } from 'vue';
-
+  // composition api
   import { defineComponent, reactive, ref, computed, unref, onMounted, watch, nextTick } from 'vue';
   import { Form, Row } from 'ant-design-vue';
   import FormItem from './components/FormItem.vue';
@@ -188,7 +188,14 @@
         resetAction: resetFields,
         submitAction: handleSubmit,
       });
-
+      /**
+       * 这里介绍下watch的一些场景
+       * ref 多个ref,
+       * reactive，默认是deep: true,且无法获取oldvalue
+       * 观察 reactive 数据的某个或某些属性，需要用函数形式
+       * 如果reactive对象的属性还是对象可以手动开启 deep: true
+       * 总之：区别watch观测的到底是什么
+       */
       watch(
         () => unref(getProps).model,
         () => {
@@ -209,6 +216,7 @@
       );
 
       watch(
+        // 观察reactive 的某个属性，使用函数方式取到
         () => getSchema.value,
         (schema) => {
           nextTick(() => {

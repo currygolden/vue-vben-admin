@@ -64,6 +64,10 @@ export function getDynamicProps<T, U>(props: T): Partial<U> {
   return ret as Partial<U>;
 }
 
+/**
+ * @description 获取符合路由格式的匹配数组，仅获取meta&name&path
+ * @param {object} RouteLocationNormalized
+ */
 export function getRawRoute(route: RouteLocationNormalized): RouteLocationNormalized {
   if (!route) return route;
   const { matched, ...opt } = route;
