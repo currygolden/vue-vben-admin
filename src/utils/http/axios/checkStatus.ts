@@ -70,6 +70,7 @@ export function checkStatus(
     default:
   }
 
+  // 统一错误信息处理
   if (errMessage) {
     if (errorMessageMode === 'modal') {
       createErrorModal({ title: t('sys.api.errorTip'), content: errMessage });

@@ -4,6 +4,7 @@
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { RequestOptions, Result } from '/#/axios';
 
+// 基于原生配置拓展的选项配置，定义了一些列的拦截器
 export interface CreateAxiosOptions extends AxiosRequestConfig {
   authenticationScheme?: string;
   urlPrefix?: string;
@@ -11,9 +12,11 @@ export interface CreateAxiosOptions extends AxiosRequestConfig {
   requestOptions?: RequestOptions;
 }
 
+/**
+ * 抽象类是供其他类继承的基类，抽象类不允许被实例化。抽象类中的抽象方法必须在子类中被实现
+ */
 export abstract class AxiosTransform {
   /**
-   * @description: Process configuration before request
    * @description: Process configuration before request
    */
   beforeRequestHook?: (config: AxiosRequestConfig, options: RequestOptions) => AxiosRequestConfig;

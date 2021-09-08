@@ -12,6 +12,8 @@ export interface CreateStorageParams extends EncryptionParams {
   hasEncrypt: boolean;
   timeout?: Nullable<number>;
 }
+
+// 调用 createStorage 实际会返回 storage 对象
 export const createStorage = ({
   prefixKey = '',
   storage = sessionStorage,
@@ -33,6 +35,7 @@ export const createStorage = ({
    * @example
    */
   const WebStorage = class WebStorage {
+    // 私有变量
     private storage: Storage;
     private prefixKey?: string;
     private encryption: AesEncryption;

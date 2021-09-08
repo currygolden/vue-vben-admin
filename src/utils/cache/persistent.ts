@@ -35,6 +35,7 @@ export type BasicKeys = keyof BasicStore;
 type LocalKeys = keyof LocalStore;
 type SessionKeys = keyof SessionStore;
 
+// storage 实例，拥有一些读写api
 const ls = createLocalStorage();
 const ss = createSessionStorage();
 

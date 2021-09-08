@@ -13,11 +13,12 @@ export * from './axiosTransform';
 
 /**
  * @description:  axios module
+ * 这里具体是typescript里类的写法
  */
 export class VAxios {
   private axiosInstance: AxiosInstance;
   private readonly options: CreateAxiosOptions;
-
+  // 实例化的配置数据类型
   constructor(options: CreateAxiosOptions) {
     this.options = options;
     this.axiosInstance = axios.create(options);
@@ -68,6 +69,7 @@ export class VAxios {
     if (!transform) {
       return;
     }
+    // 获取一系列钩子
     const {
       requestInterceptors,
       requestInterceptorsCatch,
@@ -75,6 +77,7 @@ export class VAxios {
       responseInterceptorsCatch,
     } = transform;
 
+    // 实例化 AxiosCanceler 类
     const axiosCanceler = new AxiosCanceler();
 
     // Request interceptor configuration processing
@@ -91,6 +94,7 @@ export class VAxios {
 
       !ignoreCancel && axiosCanceler.addPending(config);
       if (requestInterceptors && isFunction(requestInterceptors)) {
+        // options 是实例化的配置，config是实际调用的配置
         config = requestInterceptors(config, this.options);
       }
       return config;
@@ -222,6 +226,7 @@ export class VAxios {
         })
         .catch((e: Error | AxiosError) => {
           if (requestCatchHook && isFunction(requestCatchHook)) {
+            // 这里出错了也会catch
             reject(requestCatchHook(e, opt));
             return;
           }

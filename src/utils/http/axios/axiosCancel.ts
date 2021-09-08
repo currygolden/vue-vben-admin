@@ -52,7 +52,7 @@ export class AxiosCanceler {
   }
 
   /**
-   * @description: reset
+   * @description: reset 清空map
    */
   reset(): void {
     pendingMap = new Map<string, Canceler>();

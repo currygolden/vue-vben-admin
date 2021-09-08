@@ -10,8 +10,12 @@ export function getToken() {
   return getAuthCache(TOKEN_KEY);
 }
 
+/**
+ * 实现存储的 查询/删除/修改
+ */
 export function getAuthCache<T>(key: BasicKeys) {
   const fn = isLocal ? Persistent.getLocal : Persistent.getSession;
+  // 定义类型断言结果泛型
   return fn(key) as T;
 }
 

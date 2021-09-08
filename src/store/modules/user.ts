@@ -95,6 +95,7 @@ export const useUserStore = defineStore({
 
         // save token
         this.setToken(token);
+        // 与login有先后关系
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);
