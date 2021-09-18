@@ -13,7 +13,7 @@ export interface CreateStorageParams extends EncryptionParams {
   timeout?: Nullable<number>;
 }
 
-// 调用 createStorage 实际会返回 storage 对象
+// 调用 createStorage 实际会返回 storage 对象，默认是sessionStorage
 export const createStorage = ({
   prefixKey = '',
   storage = sessionStorage,
@@ -51,6 +51,7 @@ export const createStorage = ({
       this.hasEncrypt = hasEncrypt;
     }
 
+    // 避免命名冲突
     private getKey(key: string) {
       return `${this.prefixKey}${key}`.toUpperCase();
     }
@@ -88,6 +89,7 @@ export const createStorage = ({
         const decVal = this.hasEncrypt ? this.encryption.decryptByAES(val) : val;
         const data = JSON.parse(decVal);
         const { value, expire } = data;
+        // 过期判断
         if (isNullOrUnDef(expire) || expire >= new Date().getTime()) {
           return value;
         }

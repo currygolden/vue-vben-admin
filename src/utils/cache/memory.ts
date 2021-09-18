@@ -40,6 +40,7 @@ export class Memory<T = any, V = any> {
   set<K extends keyof T>(key: K, value: V, expires?: number) {
     let item = this.get(key);
 
+    // 默认过期时间
     if (!expires || (expires as number) <= 0) {
       expires = this.alive;
     }

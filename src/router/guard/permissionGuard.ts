@@ -9,6 +9,7 @@ import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 
 import { RootRoute } from '/@/router/routes';
 
+// 业务中使用的变量单独定义，不要在业务中单独使用
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
 
 const ROOT_PATH = RootRoute.path;
@@ -16,8 +17,10 @@ const ROOT_PATH = RootRoute.path;
 const whitePathList: PageEnum[] = [LOGIN_PATH];
 
 export function createPermissionGuard(router: Router) {
+  // function 的模式看起来就是模块化清晰
   const userStore = useUserStoreWithOut();
   const permissionStore = usePermissionStoreWithOut();
+
   router.beforeEach(async (to, from, next) => {
     // 跳转首页
     if (
@@ -96,6 +99,7 @@ export function createPermissionGuard(router: Router) {
       return;
     }
 
+    // 前面处理了各种可以跳转的场景，这一步会生成实际的路由表
     const routes = await permissionStore.buildRoutesAction();
 
     routes.forEach((route) => {

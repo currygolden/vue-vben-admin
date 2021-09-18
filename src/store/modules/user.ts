@@ -101,6 +101,10 @@ export const useUserStore = defineStore({
         return Promise.reject(error);
       }
     },
+    /**
+     * token交换 权限信息，比如UAC，小程序等
+     * addRoute api 处理变化的路由表
+     */
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
       // get user info
@@ -110,6 +114,7 @@ export const useUserStore = defineStore({
       if (sessionTimeout) {
         this.setSessionTimeout(false);
       } else {
+        // 整理动态添加的路由信息
         const permissionStore = usePermissionStore();
         if (!permissionStore.isDynamicAddedRoute) {
           const routes = await permissionStore.buildRoutesAction();
@@ -123,6 +128,7 @@ export const useUserStore = defineStore({
       }
       return userInfo;
     },
+    // 登陆之后根据用户信息获取具体的权限信息
     async getUserInfoAction(): Promise<UserInfo> {
       const userInfo = await getUserInfo();
       const { roles = [] } = userInfo;

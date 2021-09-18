@@ -81,6 +81,7 @@ export function findPath<T = any>(
   const list = [...tree];
   const visitedSet = new Set();
   const { children } = config;
+  // 典型的BFS遍历
   while (list.length) {
     const node = list[0];
     if (visitedSet.has(node)) {
@@ -88,6 +89,7 @@ export function findPath<T = any>(
       list.shift();
     } else {
       visitedSet.add(node);
+      // ts的取值逻辑 key! 代表一定存在
       node[children!] && list.unshift(...node[children!]);
       path.push(node);
       if (func(node)) {

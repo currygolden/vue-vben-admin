@@ -6,8 +6,10 @@ import { mainOutRoutes } from './mainOut';
 import { PageEnum } from '/@/enums/pageEnum';
 import { t } from '/@/hooks/web/useI18n';
 
+// vite 导入文件的方式
 const modules = import.meta.globEager('./modules/**/*.ts');
 
+// 约定数组的类型
 const routeModuleList: AppRouteModule[] = [];
 
 Object.keys(modules).forEach((key) => {

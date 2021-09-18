@@ -21,7 +21,7 @@ export const router = createRouter({
   scrollBehavior: () => ({ left: 0, top: 0 }),
 });
 
-// reset router
+// reset router，去掉白名单中没有的
 export function resetRouter() {
   router.getRoutes().forEach((route) => {
     const { name } = route;

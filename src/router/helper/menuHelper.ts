@@ -7,6 +7,7 @@ import { RouteParams } from 'vue-router';
 import { toRaw } from 'vue';
 
 export function getAllParentPath<T = Recordable>(treeData: T[], path: string) {
+  // 类型断言
   const menuList = findPath(treeData, (n) => n.path === path) as Menu[];
   return (menuList || []).map((item) => item.path);
 }
