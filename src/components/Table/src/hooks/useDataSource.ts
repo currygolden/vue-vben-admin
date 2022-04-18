@@ -14,7 +14,7 @@ import {
 import { useTimeoutFn } from '/@/hooks/core/useTimeout';
 import { buildUUID } from '/@/utils/uuid';
 import { isFunction, isBoolean } from '/@/utils/is';
-import { get, cloneDeep } from 'lodash-es';
+import { get, cloneDeep, merge } from 'lodash-es';
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const';
 
 interface ActionType {
@@ -160,6 +160,48 @@ export function useDataSource(
     }
   }
 
+  function deleteTableDataRecord(rowKey: string | number | string[] | number[]) {
+    if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
+    const rowKeyName = unref(getRowKey);
+    if (!rowKeyName) return;
+    const rowKeys = !Array.isArray(rowKey) ? [rowKey] : rowKey;
+    for (const key of rowKeys) {
+      let index: number | undefined = dataSourceRef.value.findIndex((row) => {
+        let targetKeyName: string;
+        if (typeof rowKeyName === 'function') {
+          targetKeyName = rowKeyName(row);
+        } else {
+          targetKeyName = rowKeyName as string;
+        }
+        return row[targetKeyName] === key;
+      });
+      if (index >= 0) {
+        dataSourceRef.value.splice(index, 1);
+      }
+      index = unref(propsRef).dataSource?.findIndex((row) => {
+        let targetKeyName: string;
+        if (typeof rowKeyName === 'function') {
+          targetKeyName = rowKeyName(row);
+        } else {
+          targetKeyName = rowKeyName as string;
+        }
+        return row[targetKeyName] === key;
+      });
+      if (typeof index !== 'undefined' && index !== -1)
+        unref(propsRef).dataSource?.splice(index, 1);
+    }
+    setPagination({
+      total: unref(propsRef).dataSource?.length,
+    });
+  }
+
+  function insertTableDataRecord(record: Recordable, index: number): Recordable | undefined {
+    // if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
+    index = index ?? dataSourceRef.value?.length;
+    unref(dataSourceRef).splice(index, 0, record);
+    return unref(dataSourceRef);
+  }
+
   function findTableDataRecord(rowKey: string | number) {
     if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
 
@@ -198,8 +240,16 @@ export function useDataSource(
   }
 
   async function fetch(opt?: FetchParams) {
-    const { api, searchInfo, fetchSetting, beforeFetch, afterFetch, useSearchForm, pagination } =
-      unref(propsRef);
+    const {
+      api,
+      searchInfo,
+      defSort,
+      fetchSetting,
+      beforeFetch,
+      afterFetch,
+      useSearchForm,
+      pagination,
+    } = unref(propsRef);
     if (!api || !isFunction(api)) return;
     try {
       setLoading(true);
@@ -221,16 +271,17 @@ export function useDataSource(
 
       const { sortInfo = {}, filterInfo } = searchState;
 
-      let params: Recordable = {
-        ...pageParams,
-        ...(useSearchForm ? getFieldsValue() : {}),
-        ...searchInfo,
-        ...(opt?.searchInfo ?? {}),
-        ...sortInfo,
-        ...filterInfo,
-        ...(opt?.sortInfo ?? {}),
-        ...(opt?.filterInfo ?? {}),
-      };
+      let params: Recordable = merge(
+        pageParams,
+        useSearchForm ? getFieldsValue() : {},
+        searchInfo,
+        opt?.searchInfo ?? {},
+        defSort,
+        sortInfo,
+        filterInfo,
+        opt?.sortInfo ?? {},
+        opt?.filterInfo ?? {},
+      );
       if (beforeFetch && isFunction(beforeFetch)) {
         params = (await beforeFetch(params)) || params;
       }
@@ -241,7 +292,7 @@ export function useDataSource(
       const isArrayResult = Array.isArray(res);
 
       let resultItems: Recordable[] = isArrayResult ? res : get(res, listField);
-      const resultTotal: number = isArrayResult ? 0 : get(res, totalField);
+      const resultTotal: number = isArrayResult ? res.length : get(res, totalField);
 
       // 假如数据变少，导致总页数变少并小于当前选中页码，通过getPaginationRef获取到的页码是不正确的，需获取正确的页码再次执行
       if (resultTotal) {
@@ -250,7 +301,7 @@ export function useDataSource(
           setPagination({
             current: currentTotalPage,
           });
-          fetch(opt);
+          return await fetch(opt);
         }
       }
 
@@ -270,6 +321,7 @@ export function useDataSource(
         items: unref(resultItems),
         total: resultTotal,
       });
+      return resultItems;
     } catch (error) {
       emit('fetch-error', error);
       dataSourceRef.value = [];
@@ -294,7 +346,7 @@ export function useDataSource(
   }
 
   async function reload(opt?: FetchParams) {
-    await fetch(opt);
+    return await fetch(opt);
   }
 
   onMounted(() => {
@@ -314,6 +366,8 @@ export function useDataSource(
     reload,
     updateTableData,
     updateTableDataRecord,
+    deleteTableDataRecord,
+    insertTableDataRecord,
     findTableDataRecord,
     handleTableChange,
   };

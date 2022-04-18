@@ -4,8 +4,9 @@
   </Card>
 </template>
 <script lang="ts">
-  import { defineComponent, Ref, ref, watch } from 'vue';
+  import type { Ref } from 'vue';
 
+  import { defineComponent, ref, watch } from 'vue';
   import { Card } from 'ant-design-vue';
   import { useECharts } from '/@/hooks/web/useECharts';
 
@@ -42,28 +43,22 @@
               splitNumber: 8,
               indicator: [
                 {
-                  text: '2017',
-                  max: 100,
+                  name: '2017',
                 },
                 {
-                  text: '2017',
-                  max: 100,
+                  name: '2017',
                 },
                 {
-                  text: '2018',
-                  max: 100,
+                  name: '2018',
                 },
                 {
-                  text: '2019',
-                  max: 100,
+                  name: '2019',
                 },
                 {
-                  text: '2020',
-                  max: 100,
+                  name: '2020',
                 },
                 {
-                  text: '2021',
-                  max: 100,
+                  name: '2021',
                 },
               ],
             },
