@@ -6,8 +6,12 @@ import { mainOutRoutes } from './mainOut';
 import { PageEnum } from '/@/enums/pageEnum';
 import { t } from '/@/hooks/web/useI18n';
 
+/**
+ * @description 读取某个目录下的文件，也可以 fs 模块实现
+ *
+ */
 const modules = import.meta.globEager('./modules/**/*.ts');
-
+// console.log('routemodule', modules)
 const routeModuleList: AppRouteModule[] = [];
 
 Object.keys(modules).forEach((key) => {
@@ -15,6 +19,7 @@ Object.keys(modules).forEach((key) => {
   const modList = Array.isArray(mod) ? [...mod] : [mod];
   routeModuleList.push(...modList);
 });
+console.log('routeList', routeModuleList);
 
 export const asyncRoutes = [PAGE_NOT_FOUND_ROUTE, ...routeModuleList];
 
