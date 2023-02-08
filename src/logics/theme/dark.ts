@@ -1,6 +1,11 @@
 import { darkCssIsReady, loadDarkThemeCss } from 'vite-plugin-theme/es/client';
 import { addClass, hasClass, removeClass } from '/@/utils/domUtils';
 
+/**
+ * dom节点添加属性，样式操作，行内样式工具
+ * 涉及vite-plugin细节，但不深入
+ * 一般换肤都是组件库本身方案
+ */
 export async function updateDarkTheme(mode: string | null = 'light') {
   const htmlRoot = document.getElementById('htmlRoot');
   if (!htmlRoot) {

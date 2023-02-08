@@ -35,6 +35,7 @@ export const useAppStore = defineStore({
     projectConfig: Persistent.getLocal(PROJ_CFG_KEY),
     beforeMiniInfo: {},
   }),
+  // 由state生成的属性
   getters: {
     getPageLoading(): boolean {
       return this.pageLoading;
@@ -68,7 +69,7 @@ export const useAppStore = defineStore({
     setPageLoading(loading: boolean): void {
       this.pageLoading = loading;
     },
-
+    // 修改全局状态并缓存
     setDarkMode(mode: ThemeEnum): void {
       this.darkMode = mode;
       localStorage.setItem(APP_DARK_MODE_KEY_, mode);

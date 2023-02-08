@@ -7,7 +7,10 @@
   import { RoleEnum } from '/@/enums/roleEnum';
   import { usePermission } from '/@/hooks/web/usePermission';
   import { getSlot } from '/@/utils/helper/tsxHelper';
-
+  /**
+   * @description 容器按钮组件
+   *
+   */
   export default defineComponent({
     name: 'Authority',
     props: {

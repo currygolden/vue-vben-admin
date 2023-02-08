@@ -6,6 +6,7 @@ export interface AppProviderContextProps {
   isMobile: Ref<boolean>;
 }
 
+// 已经定义注入key的类型
 const key: InjectionKey<AppProviderContextProps> = Symbol();
 
 export function createAppProviderContext(context: AppProviderContextProps) {

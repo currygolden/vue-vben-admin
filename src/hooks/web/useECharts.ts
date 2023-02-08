@@ -9,12 +9,17 @@ import { useBreakpoint } from '/@/hooks/event/useBreakpoint';
 import echarts from '/@/utils/lib/echarts';
 import { useRootSetting } from '/@/hooks/setting/useRootSetting';
 
+// 自定义组合式api,复用逻辑&状态
 export function useECharts(
   elRef: Ref<HTMLDivElement>,
   theme: 'light' | 'dark' | 'default' = 'default',
 ) {
   const { getDarkMode: getSysDarkMode } = useRootSetting();
-
+  /**
+   * 1. 接收一个 getter 函数,返回值为一个计算属性 ref
+   * 2. xxx.value 访问计算结果。计算属性 ref 也会在模板中自动解包
+   * 3. 计算属性值会基于其响应式依赖被缓存
+   */
   const getDarkMode = computed(() => {
     return theme === 'default' ? getSysDarkMode.value : theme;
   });
@@ -55,7 +60,7 @@ export function useECharts(
       }, 30);
     }
   }
-
+  // 更新chart options
   function setOptions(options: EChartsOption, clear = true) {
     cacheOptions.value = options;
     if (unref(elRef)?.offsetHeight === 0) {
@@ -81,7 +86,10 @@ export function useECharts(
   function resize() {
     chartInstance?.resize();
   }
-
+  /**
+   * 1. watch的类型 它可以是一个 ref (包括计算属性)、一个响应式对象、一个 getter 函数、或多个数据源组成的数组
+   *
+   */
   watch(
     () => getDarkMode.value,
     (theme) => {
@@ -93,6 +101,7 @@ export function useECharts(
     },
   );
 
+  // 常见的GC操作
   tryOnUnmounted(() => {
     if (!chartInstance) return;
     removeResizeFn();

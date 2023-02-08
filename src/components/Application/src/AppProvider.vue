@@ -13,6 +13,10 @@
     prefixCls: { type: String, default: prefixCls },
   };
 
+  /**
+   * @description 容器组件，提供共享的全局属性
+   *
+   */
   export default defineComponent({
     name: 'AppProvider',
     inheritAttrs: false,

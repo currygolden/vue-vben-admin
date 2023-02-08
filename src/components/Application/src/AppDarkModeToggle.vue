@@ -13,7 +13,6 @@
   import { updateHeaderBgColor, updateSidebarBgColor } from '/@/logics/theme/updateBackground';
   import { updateDarkTheme } from '/@/logics/theme/dark';
   import { ThemeEnum } from '/@/enums/appEnum';
-
   const { prefixCls } = useDesign('dark-switch');
   const { getDarkMode, setDarkMode, getShowDarkModeToggle } = useRootSetting();
 
@@ -25,7 +24,10 @@
       [`${prefixCls}--dark`]: unref(isDark),
     },
   ]);
-
+  /**
+   * @description 切换项目主题，颜色风格
+   *
+   */
   function toggleDarkMode() {
     const darkMode = getDarkMode.value === ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK;
     setDarkMode(darkMode);

@@ -5,7 +5,7 @@ export function toggleClass(flag: boolean, clsName: string, target?: HTMLElement
   className = className.replace(clsName, '');
   targetEl.className = flag ? `${className} ${clsName} ` : className;
 }
-
+// 添加style样式
 export function setCssVar(prop: string, val: any, dom = docEle) {
   dom.style.setProperty(prop, val);
 }

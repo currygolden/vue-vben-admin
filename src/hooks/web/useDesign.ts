@@ -3,6 +3,7 @@ import { useAppProviderContext } from '/@/components/Application';
 // import { lowerFirst } from 'lodash-es';
 export function useDesign(scope: string) {
   const values = useAppProviderContext();
+  // console.log('appvalues', values)
   // const $style = cssModule ? useCssModule() : {};
 
   // const style: Record<string, string> = {};

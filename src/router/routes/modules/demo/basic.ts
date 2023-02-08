@@ -17,7 +17,7 @@ const basicComp: AppRouteModule = {
     {
       path: 'alert',
       name: 'BasicAlert',
-      component: () => import('/@/views/dashboard/analysis/index.vue'),
+      component: () => import('/@/views/demo/basicComp/index.vue'),
       meta: {
         title: 'alert',
       },

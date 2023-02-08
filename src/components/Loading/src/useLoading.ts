@@ -44,6 +44,6 @@ export function useLoading(
   const setTip = (tip: string) => {
     instance.setTip(tip);
   };
-
+  // 暴露api
   return [open, close, setTip];
 }

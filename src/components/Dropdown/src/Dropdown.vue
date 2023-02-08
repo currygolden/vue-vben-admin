@@ -78,6 +78,7 @@
       },
     },
     emits: ['menuEvent'],
+    // 组件写法
     setup(props, { emit }) {
       function handleClickMenu(item: DropMenu) {
         const { event } = item;

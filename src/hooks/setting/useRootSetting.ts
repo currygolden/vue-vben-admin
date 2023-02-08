@@ -13,6 +13,7 @@ type RootSetting = Omit<
 export function useRootSetting() {
   const appStore = useAppStore();
 
+  // 获取state属性并包装成computed
   const getPageLoading = computed(() => appStore.getPageLoading);
 
   const getOpenKeepAlive = computed(() => appStore.getProjectConfig.openKeepAlive);

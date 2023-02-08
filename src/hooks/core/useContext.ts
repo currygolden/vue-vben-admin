@@ -17,7 +17,7 @@ export interface CreateContextOptions {
 type ShallowUnwrap<T> = {
   [P in keyof T]: UnwrapRef<T[P]>;
 };
-
+// 拓展原生的provide
 export function createContext<T>(
   context: any,
   key: InjectionKey<T> = Symbol(),
@@ -37,6 +37,7 @@ export function createContext<T>(
 export function useContext<T>(key: InjectionKey<T>, native?: boolean): T;
 export function useContext<T>(key: InjectionKey<T>, defaultValue?: any, native?: boolean): T;
 
+// 使用注入值，拓展inject
 export function useContext<T>(
   key: InjectionKey<T> = Symbol(),
   defaultValue?: any,
