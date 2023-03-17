@@ -35,8 +35,9 @@
         }
         return scroll;
       };
-
       function scrollTo(top: number) {
+        console.log('el:', getScroll());
+
         getScroll().scrollTo(top);
       }
       function scrollBottom() {
