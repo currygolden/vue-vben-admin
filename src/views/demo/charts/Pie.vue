@@ -33,6 +33,7 @@
         '原因9',
         '原因10',
       ];
+      onCreated;
       onMounted(() => {
         setOptions({
           backgroundColor: '#0f375f',
